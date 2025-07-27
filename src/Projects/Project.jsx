@@ -1,6 +1,12 @@
+import { useState } from 'react'
 import { Cards } from '../Static'
+import Popup from '../ui/popup'
 
 const Project = () => {
+  const [actionId , setActionId] = useState(null)
+  const handlerShow = (id) => setActionId(id)
+  const handlerClose = () => setActionId()
+  
   return (
     <section className="py-10">
       <div className="container px-4">
@@ -18,11 +24,23 @@ const Project = () => {
                     src={item.img}
                     alt={item.title}
                     className="w-full h-full object-cover"
+                    onClick={()=> handlerShow(item.id)}
                   />
                 </div>
                 <div className="p-4">
                   <p className="text-lg font-medium text-gray-800">{item.title}</p>
+                  {
+                    actionId === item.id && (
+                      <Popup>
+                        <div>
+                          <img src={item.img} alt=""  className='object-contain rounded-x1' onClick={handlerClose} />
+                        </div>
+                      </Popup>
+                    )
+                  }
+                  
                 </div>
+
               </div>
             ))
           }
